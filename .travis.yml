@@ -6,10 +6,18 @@ jdk:
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
 
+# после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
+# Здесь используется сторонни сервис https://codecov.io/
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+env:
+  global:
+  - CODECOV_TOKEN="eea4fb91-970f-45db-9b58-ef40ddae35f9"
+
 # Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упала
 notifications:
   email:
     recipients:
-      -parsentev@yandex.ru
+      -sekator778@gmail.com
     on_success: never # default: change
     on_failure: always # default: always
