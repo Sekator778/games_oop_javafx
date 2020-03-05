@@ -13,6 +13,7 @@ import java.util.Optional;
  * @version $Id$
  * @since 0.1
  */
+
 public class Logic {
     private final Figure[] figures = new Figure[32];
     private int index = 0;
@@ -27,6 +28,14 @@ public class Logic {
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
             if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+                for (Cell cell : steps
+                ) {
+                    if (this.findBy(cell) != -1) {
+                        throw new IllegalStateException(
+                                String.format("Could not way by have figure from %s to %s", source, dest)
+                        );
+                    }
+                }
                 rst = true;
                 this.figures[index] = this.figures[index].copy(dest);
             }
@@ -35,9 +44,7 @@ public class Logic {
     }
 
     public void clean() {
-        for (int position = 0; position != this.figures.length; position++) {
-            this.figures[position] = null;
-        }
+        Arrays.fill(this.figures, null);
         this.index = 0;
     }
 
@@ -54,8 +61,6 @@ public class Logic {
 
     @Override
     public String toString() {
-        return "Logic{" +
-                "figures=" + Arrays.toString(this.figures) +
-                '}';
+        return "Logic{" + "figures=" + Arrays.toString(this.figures) + '}';
     }
 }
