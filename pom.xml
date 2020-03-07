@@ -68,7 +68,6 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.jacoco</groupId>
@@ -95,6 +94,5 @@
                     <version>3.8.1</version>
                 </plugin>
             </plugins>
-        </pluginManagement>
     </build>
 </project>
