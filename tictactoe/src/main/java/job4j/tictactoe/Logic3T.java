@@ -26,27 +26,43 @@ public class Logic3T {
     }
 
     private boolean isWinner(Predicate<Figure3T> tPredicate) {
-        return
-                this.fillBy(tPredicate, 0, 0, 1, 0)
-                        || this.fillBy(tPredicate, 0, 0, 0, 1)
-                        || this.fillBy(tPredicate, 0, 0, 1, 1)
-                        || this.fillBy(tPredicate, 1, 0, 0, 1)
-                        || this.fillBy(tPredicate, 0, 1, 1, 0)
-                        || this.fillBy(tPredicate, 0, this.table.length - 1, 1, 0)
-                        || this.fillBy(tPredicate, this.table.length - 1, 0, -1, 1)
-                        || this.fillBy(tPredicate, this.table.length - 1, 0, 0, 1);
+        boolean rsl = false;
+        for (int i = 0; i < this.table.length; i++) {
+            if (this.fillBy(tPredicate, i, 0, 0, 1)
+                    || this.fillBy(tPredicate, 0, i, 1, 0)) {
+                rsl = true;
+                break;
+            }
+        }
+        if (!rsl) {
+            return this.fillBy(tPredicate, 0, 0, 1, 1)
+                    || this.fillBy(tPredicate, this.table.length - 1, 0, -1, 1);
+        }
+        return rsl;
     }
 
-    public boolean isWinnerX() {
-        return this.isWinner(Figure3T::hasMarkX);
+//    private boolean isWinner(Predicate<Figure3T> tPredicate) {
+//        return
+//                this.fillBy(tPredicate, 0, 0, 0, 1)
+//                        || this.fillBy(tPredicate, 0, 0, 1, 0)
+//                        || this.fillBy(tPredicate, 0, 0, 1, 1)
+//                        || this.fillBy(tPredicate, 1, 0, 0, 1)
+//                        || this.fillBy(tPredicate, 0, 1, 1, 0)
+//                        || this.fillBy(tPredicate, 0, this.table.length - 1, 1, 0)
+//                        || this.fillBy(tPredicate, this.table.length - 1, 0, -1, 1)
+//                        || this.fillBy(tPredicate, this.table.length - 1, 0, 0, 1);
+//
+//    }
 
-    }
+        public boolean isWinnerX() {
+            return this.isWinner(Figure3T::hasMarkX);
+        }
 
-    public boolean isWinnerO() {
-        return this.isWinner(Figure3T::hasMarkO);
-    }
+        public boolean isWinnerO() {
+            return this.isWinner(Figure3T::hasMarkO);
+        }
 
-    public boolean hasGap() {
-        return Arrays.stream(this.table).flatMap(Stream::of).anyMatch(cell -> !cell.hasMarkO() && !cell.hasMarkX());
+        public boolean hasGap() {
+            return Arrays.stream(this.table).flatMap(Stream::of).anyMatch(cell -> !cell.hasMarkO() && !cell.hasMarkX());
+        }
     }
-}
